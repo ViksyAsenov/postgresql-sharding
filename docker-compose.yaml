@@ -1,0 +1,36 @@
+version: "3.8"
+name: postgres-sharding
+
+services:
+  main-postgres-db:
+    image: postgres:latest
+    container_name: main_db
+    environment:
+      POSTGRES_PASSWORD: ${dbpassword}
+    volumes:
+      - ./sql/main_db_init.sh:/docker-entrypoint-initdb.d/init.sh
+    depends_on:
+      - shard1-postgres-db
+      - shard2-postgres-db
+      - shard3-postgres-db
+  shard1-postgres-db:
+    image: postgres:latest
+    container_name: shard1_db
+    environment:
+      POSTGRES_PASSWORD: ${dbpassword}
+    volumes:
+      - ./sql/shard_db_init.sql:/docker-entrypoint-initdb.d/init.sql
+  shard2-postgres-db:
+    image: postgres:latest
+    container_name: shard2_db
+    environment:
+      POSTGRES_PASSWORD: ${dbpassword}
+    volumes:
+      - ./sql/shard_db_init.sql:/docker-entrypoint-initdb.d/init.sql
+  shard3-postgres-db:
+    image: postgres:latest
+    container_name: shard3_db
+    environment:
+      POSTGRES_PASSWORD: ${dbpassword}
+    volumes:
+      - ./sql/shard_db_init.sql:/docker-entrypoint-initdb.d/init.sql
