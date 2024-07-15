@@ -6,7 +6,9 @@ services:
     image: postgres:latest
     container_name: main_db
     environment:
-      POSTGRES_PASSWORD: ${dbpassword}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - ${MAIN_DB_PORT}:5432
     volumes:
       - ./sql/main_db_init.sh:/docker-entrypoint-initdb.d/init.sh
     depends_on:
@@ -17,20 +19,26 @@ services:
     image: postgres:latest
     container_name: shard1_db
     environment:
-      POSTGRES_PASSWORD: ${dbpassword}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - ${SHARD1_PORT}:5432
     volumes:
       - ./sql/shard_db_init.sql:/docker-entrypoint-initdb.d/init.sql
   shard2-postgres-db:
     image: postgres:latest
     container_name: shard2_db
     environment:
-      POSTGRES_PASSWORD: ${dbpassword}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - ${SHARD2_PORT}:5432
     volumes:
       - ./sql/shard_db_init.sql:/docker-entrypoint-initdb.d/init.sql
   shard3-postgres-db:
     image: postgres:latest
     container_name: shard3_db
     environment:
-      POSTGRES_PASSWORD: ${dbpassword}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - ${SHARD3_PORT}:5432
     volumes:
       - ./sql/shard_db_init.sql:/docker-entrypoint-initdb.d/init.sql
