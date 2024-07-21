@@ -1,6 +1,6 @@
-# PostgreSQL Sharding
+# PostgreSQL Sharding and RLS
 
-This project demonstrates PostgreSQL only sharding logic, Docker for containerization, and JavaScript for testing the implementation.
+This project demonstrates PostgreSQL only sharding and RLS. Docker is used for containerization and JavaScript for testing the implementation.
 
 ## Table of Contents
 
@@ -10,11 +10,12 @@ This project demonstrates PostgreSQL only sharding logic, Docker for containeriz
   - [Environment Configuration](#environment-configuration)
   - [Docker Setup](#docker-setup)
 - [Sharding Logic](#sharding-logic)
+- [RLS Logic](#rls-logic)
 - [Testing](#testing)
 
 ## Introduction
 
-Sharding is a database architecture pattern related to horizontal partitioning — the practice of separating one table's rows into multiple tables, known as shards, which can be distributed across multiple databases.
+Sharding is a database architecture pattern related to horizontal partitioning — the practice of separating one table's rows into multiple tables, known as shards, which can be distributed across multiple databases. RLS (Row-Level Security) allows you to control access to individual rows in a table based on certain criteria. This feature is particularly useful for multi-tenant applications where different users or groups of users should have access to different subsets of the data within the same table.
 
 ## Prerequisites
 
@@ -37,8 +38,8 @@ Sharding is a database architecture pattern related to horizontal partitioning �
 
 1 . Clone the repository:
 
-    git clone https://github.com/ViksyAsenov/postgresql-sharding
-    cd postgresql-sharding
+    git clone https://github.com/ViksyAsenov/postgresql-sharding-and-rls
+    cd postgresql-sharding-and-rls
 
 2 . Build and start the Docker containers:
 
@@ -51,6 +52,14 @@ The sharding logic is to separate the users based on their age:
 - Users from 0-30 are put in the first shard
 - Users from 30-60 are put in the second shard
 - Users from 60-123 are put in the third shard
+
+## RLS Logic
+
+The RLS logic is to separate the visibility of each product based on the user's access:
+
+- Users with 'normal' access only see the normal products
+- Users with 'premium' access see both normal and premium products
+- Users with 'super' access see all products
 
 ## Testing
 
